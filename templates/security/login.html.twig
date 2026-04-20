@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login!{% endblock %}
+
+{% block stylesheets %}
+<style>
+.login {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="h-screen flex items-center justify-center bg-gray-100">
+<div class="w-lg bg-white p-6 rounded-lg text-black flex flex-col gap-4">
+
+    <div class="text-lg">Gestion de Tâches</div>
+    <p class="text-gray-500">Organisez votre journée efficacement</p>
+
+    <div class="flex items-center bg-gray-200 justify-center py-1 px-1 rounded-3xl gap-4">
+        <button class="w-full bg-white py-2 rounded-3xl">Connexion</button>
+        <a href="{{ path('app_register') }}"
+           class="w-full text-center bg-gray-200 py-2 rounded-3xl">
+            Inscription
+        </a>
+    </div>
+
+    {% if error %}
+        <div class="text-red-500">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="text-sm">
+            Connecté en tant que {{ app.user.userIdentifier }}
+            <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+
+    {{ form_start(loginForm, { attr: { class: "login" } }) }}
+
+        <div>
+            <label>Email</label>
+            {{ form_widget(loginForm._username, {
+                attr: {
+                    class: "w-full bg-gray-100 px-4 py-3 rounded-lg",
+                    placeholder: "votre@email.com"
+                }
+            }) }}
+        </div>
+
+        <div>
+            <label>Mot de passe</label>
+            {{ form_widget(loginForm._password, {
+                attr: {
+                    class: "w-full bg-gray-100 px-4 py-3 rounded-lg",
+                    placeholder: "********"
+                }
+            }) }}
+        </div>
+
+
+        {# <div class="flex items-center gap-2">
+            <input type="checkbox" name="_remember_me">
+            <label>Se souvenir de moi</label>
+        </div> #}
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}">
+
+        <button type="submit"
+                class="bg-black text-white py-2 rounded-lg">
+            Se connecter
+        </button>
+
+    {{ form_end(loginForm) }}
+
+</div>
+</section>
+{% endblock %}

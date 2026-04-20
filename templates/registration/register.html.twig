@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+<style>
+.register{
+    
+        display: flex;
+        flex-direction: column;
+        gap : 20px;
+}        
+</style>
+
+{% endblock %}
+{% block body %}
+<section class="h-screen flex items-center justify-center bg-gray-100"> 
+<div class="w-lg h-lg bg-white p-6 rounded-lg text-black  justify-center flex flex-col gap-4"> 
+
+    <div class="text-lg">Gestion de Tâches
+    </div>
+    <p class="text-gray-500"> Organisez votre journée efficacement</p>
+    <div class="flex items-center bg-gray-200 justify-center py-1 px-1 rounded-3xl gap-4"> 
+    <button id="btn-login" class="w-full bg-gray-200 text-black py-2  rounded-3xl transition-all duration-300 cursor-pointer"> 
+    <a href="{{path("app_login")}}">
+
+        Connexion 
+    </a>
+    </button>
+     <button id="btn-register" class="w-full bg-white text-black py-2 rounded-3xl transition-all duration-300 cursor-pointer"> Inscription</button>
+    </div>
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm , { attr: { class: "register" } }) }}
+        {{ form_row(registrationForm.email, { attr: { placeholder: "votre@email.com", class:"w-full bg-gray-100 placeholder-black px-4 py-3 rounded-lg focus:outline-none text-md"}}) }}
+        {{ form_row(registrationForm.username, { attr: { placeholder: "nom_utilisateur", class:"w-full bg-gray-100 placeholder-black px-4 py-3 rounded-lg focus:outline-none text-md"},}, {
+            label: 'Username'
+        }) }}
+        {{ form_row(registrationForm.plainPassword, { attr: { placeholder: "*********", class:"w-full bg-gray-100 placeholder-black px-4 py-3 rounded-lg focus:outline-none text-md"},}, {
+            label: 'Password'
+        }) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <div> <button type="submit" class="w-full h-12 cursor-pointer bg-black text-white rounded-lg btn">S'inscrire</button> </div>
+    {{ form_end(registrationForm) }}
+</div>
+</section>
+{% endblock %}
