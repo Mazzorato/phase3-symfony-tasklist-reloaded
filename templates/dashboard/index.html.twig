@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+<section class="h-screen  flex">
+
+        
+    <nav class="navbar flex-15/100  bg-[#F9FAFB] border-b border-gray-500 flex flex-col p-4">
+        <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-900 text-sm mb-6 text-white">Toutes les Tâches</a>
+        
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Dossiers</p>
+        <ul class="space-y-1">
+            <li> 
+                <a href="#" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 text-sm text-gray-700">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                        <p> Maison </p>
+                    </div>
+                    <p class="text-sm text-gray-400"> 1 </p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="content flex flex-col flex-75/100">
+        <header class="flex items-center justify-between px-8 py-4 bg-white border-b border-gray-200">
+            <div> 
+                <h1 class="text-2xl text-black">Gestion de Tâches</h1>
+                <p class="text-sm text-gray-500">Organisez votre journée efficacement</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button class="flex items-center gap-2 px-4 py-2 text-sm text-black rounded-lg hover:bg-gray-100">
+                    Gérer les priorités
+                </button>
+                <button class="flex items-center gap-2 px-4 py-2 text-sm text-black border border-gray-300 rounded-lg hover:bg-gray-100">
+                    Nouveau dossier
+                </button>
+                <button class="flex items-center gap-2 px-4 py-2 text-sm text-white  bg-gray-900 border border-gray-300 rounded-lg hover:bg-gray-700">
+                    Nouvelle Tâche
+                </button>
+                <button class="flex items-center gap-2 px-4 py-2 text-sm text-black border border-gray-300 rounded-lg hover:bg-gray-100">
+                    Déconnexion 
+                </button>
+            </div>
+        </header>
+
+    
+        <main class="flex items-center gap-4 mb-6 px-8 py-4 bg-gray-100 border border-gray-200">
+            <div class="flex items-center text-sm text-black gap-1">Filtres :</div>
+            <div class="flex items-center gap-2">
+                <label class="text-sm text-gray-900">Statut</label>
+                <select class="text-sm border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                    <option> Tous</option>
+                    <option> En cours</option>
+                    <option> Terminé</option>
+                    <option> Archivée </option>
+                </select>
+                <label class="text-sm text-gray-900">Priorité</label>
+                <select class="text-sm border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                    <option> Toutes</option>
+                    <option> Urgent</option>
+                    <option> Important</option>
+                    <option> Normal </option>
+                </select>
+            </div>
+        </main>
+        <div class="flex items-center justify-center  py-10 "> 
+            <p class=" text-gray-500"> Aucune tâche pour le moment. Créer votre première tâche !</p>
+        </div>
+
+    </div>
+</section>
+
+
+{% endblock %}
