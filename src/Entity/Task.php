@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enums\TaskStatus;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,7 +18,7 @@ class Task
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    private ?TaskStatus $status = null;
 
     #[ORM\Column]
     private ?bool $isPinned = null;
