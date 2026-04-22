@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Folder;
 use App\Entity\Priority;
 use App\Entity\Task;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,6 +23,10 @@ class TaskType extends AbstractType
             //         'Archivée' => 'archived',
             //     ]
             // ])
+            ->add('folder', EntityType::class, [
+                'class' => Folder::class,
+                'choice_label' => 'name',
+            ])
             ->add('isPinned')
             ->add('priority', EntityType::class, [
                 'class' => Priority::class,

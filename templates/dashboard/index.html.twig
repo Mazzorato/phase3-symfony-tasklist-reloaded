@@ -36,9 +36,9 @@
                 <button class="flex items-center gap-2 px-4 py-2 text-sm text-black border border-gray-300 rounded-lg hover:bg-gray-100">
                     Nouveau dossier
                 </button>
-                <button class="flex items-center gap-2 px-4 py-2 text-sm text-white  bg-gray-900 border border-gray-300 rounded-lg hover:bg-gray-700">
+            <a href="{{ path('app_task_new') }}">    <button class="flex items-center gap-2 px-4 py-2 text-sm text-white  bg-gray-900 border border-gray-300 rounded-lg hover:bg-gray-700">
                     Nouvelle Tâche
-                </button>
+                </button> </a>
                 <button class="flex items-center gap-2 px-4 py-2 text-sm text-black border border-gray-300 rounded-lg hover:bg-gray-100">
                     Déconnexion 
                 </button>
@@ -65,9 +65,31 @@
                 </select>
             </div>
         </main>
-        <div class="flex items-center justify-center  py-10 "> 
-            <p class=" text-gray-500"> Aucune tâche pour le moment. Créer votre première tâche !</p>
+        <div class="flex flex-col gap-3 px-8 py-4">
+    {% for task in tasks %}
+    
+        <div class="flex items-center justify-between bg-white border border-gray-200 rounded-xl px-5 py-4">
+            <div class="flex items-center gap-4">
+                <input type="checkbox">
+                <div>
+                    <p class="text-sm font-medium text-gray-800">
+                    <a href="{{ path('app_task_edit', {id: task.id}) }}">
+                    <p class="text-sm font-medium text-gray-800">{{ task.title }}</p>
+                    </a>
+                        {% if task.priority %}
+                            <span class="ml-2 text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-600">{{ task.priority.name }}</span>
+                        {% endif %}
+                    </p>
+                    <p class="text-xs text-gray-400">{{ task.status.value }}</p>
+                </div>
+            </div>
         </div>
+    {% else %}
+        <div class="flex items-center justify-center py-10">
+            <p class="text-gray-500">Aucune tâche pour le moment. Créez votre première tâche !</p>
+        </div>
+    {% endfor %}
+</div>
 
     </div>
 </section>

@@ -23,12 +23,44 @@ final class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($task);
             $em->flush();
-
             return $this->redirectToRoute('app_dashboard');
         }
-
         return $this->render('task/new.html.twig', [
             'form' => $form, 
         ]);
+        }
+
+    #[Route('/task/edit/{id}', name: 'app_task_edit')]
+    public function edit(Request $request, EntityManagerInterface $em, Task $task): Response
+    {
+        $task->setUser($this->getUser());
+        $form = $this->createForm(TaskType::class, $task);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            return $this->redirectToRoute('app_dashboard');
+            
+            }
+            return $this->render('task/edit.html.twig', [
+                'form' => $form,
+                ]);
     }
+
+    #[Route('/task/delete/{id}', name: 'app_task_delete', methods: ['POST'])]
+    public function delete(Request $request, EntityManagerInterface $em, Task $task): Response
+    {
+        $task->setUser($this->getUser());
+        if ($this->isCsrfTokenValid('delete'.$task->getId(), $request->request->get('_token')))
+        {
+            $em->remove($task);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('app_dashboard');
+
+
 }
+}
+    
+
