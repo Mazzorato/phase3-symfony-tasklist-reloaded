@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Folder;
 use App\Repository\FolderRepository;
 use App\Repository\TaskRepository;
@@ -32,4 +33,22 @@ final class DashboardController extends AbstractController
             'currentFolder' => $folder,
             ]);
             }
+
+    #[Route('/dashboard', name: 'app_dashboard')]
+    public function taskOrder(TaskRepository $taskRepository, FolderRepository $folderRepository): Response
+    {
+        $tasks = $taskRepository->findBy(['user' => $this->getUser()]);
+
+        usort($tasks, function($a, $b) {
+        $order = ['pending' => 0, 'completed' => 1, 'archived' => 2];
+        return $order[$a->getStatus()->value] - $order[$b->getStatus()->value];
+    });
+
+        $folders = $folderRepository->findBy(['user' => $this->getUser()]);
+
+        return $this->render('dashboard/index.html.twig', [
+        'tasks' => $tasks,
+        'folders' => $folders,
+    ]);
+    }
 }

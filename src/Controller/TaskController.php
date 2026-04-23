@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Enums\TaskStatus;
 use App\Entity\Task;
 use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -44,7 +45,8 @@ final class TaskController extends AbstractController
             }
             return $this->render('task/edit.html.twig', [
                 'form' => $form,
-                ]);
+                'task' => $task,
+            ]);
     }
 
     #[Route('/task/delete/{id}', name: 'app_task_delete', methods: ['POST'])]
@@ -58,9 +60,20 @@ final class TaskController extends AbstractController
         }
 
         return $this->redirectToRoute('app_dashboard');
+    }
 
+    #[Route('/task/status/{id}', name: 'app_task_status', methods: ['POST'])]
+    public function statu(Request $request, EntityManagerInterface $em, Task $task): Response
+    {
+        if ($this->isCsrfTokenValid('task_status' . $task->getId(), $request->request->get('_token'))) {
+        $status = $request->request->get('status');
+        $task->setStatus(TaskStatus::from($status));
+        $em->flush();
+    }
 
-}
+    return $this->redirectToRoute('app_dashboard');
+    }
+    
 }
     
 
