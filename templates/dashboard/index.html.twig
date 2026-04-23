@@ -11,16 +11,18 @@
         
         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Dossiers</p>
         <ul class="space-y-1">
-            <li> 
-                <a href="#" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 text-sm text-gray-700">
-                    <div class="flex items-center gap-2">
-                        <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                        <p> Maison </p>
-                    </div>
-                    <p class="text-sm text-gray-400"> 1 </p>
-                </a>
-            </li>
-        </ul>
+    {% for folder in folders %}
+        <li>
+            <a href="{{ path('app_dashboard_folder', {id: folder.id}) }}" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 text-sm text-gray-700">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full" style="background-color: {{ folder.color }}"></div>
+                    <p>{{ folder.name }}</p>
+                </div>
+                <p class="text-sm text-gray-400">{{ folder.tasks|length }}</p>
+            </a>
+        </li>
+    {% endfor %}
+</ul>
     </nav>
 
     <div class="content flex flex-col flex-75/100">
@@ -31,11 +33,13 @@
             </div>
             <div class="flex items-center gap-3">
                 <button class="flex items-center gap-2 px-4 py-2 text-sm text-black rounded-lg hover:bg-gray-100">
+                <a href="{{ path('app_priority') }}">
                     Gérer les priorités
-                </button>
+                </button> </a>
                 <button class="flex items-center gap-2 px-4 py-2 text-sm text-black border border-gray-300 rounded-lg hover:bg-gray-100">
+                <a href="{{ path('app_folder_new') }}">
                     Nouveau dossier
-                </button>
+                </button> </a>
             <a href="{{ path('app_task_new') }}">    <button class="flex items-center gap-2 px-4 py-2 text-sm text-white  bg-gray-900 border border-gray-300 rounded-lg hover:bg-gray-700">
                     Nouvelle Tâche
                 </button> </a>

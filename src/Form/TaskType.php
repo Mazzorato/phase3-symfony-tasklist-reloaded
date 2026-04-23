@@ -26,6 +26,8 @@ class TaskType extends AbstractType
             ->add('folder', EntityType::class, [
                 'class' => Folder::class,
                 'choice_label' => 'name',
+                'required' => false,
+                'placeholder' => 'Aucun dossier',
             ])
             ->add('isPinned')
             ->add('priority', EntityType::class, [

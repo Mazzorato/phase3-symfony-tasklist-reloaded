@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Entity;
 
-use App\Entity\Folder;
-use App\Entity\User;
 use App\Enums\TaskStatus;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,80 +31,23 @@ class Task
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     private ?Folder $folder = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    public function getId(): ?int { return $this->id; }
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
+    public function getTitle(): ?string { return $this->title; }
+    public function setTitle(string $title): static { $this->title = $title; return $this; }
 
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
+    public function getStatus(): ?TaskStatus { return $this->status; }
+    public function setStatus(TaskStatus $status): static { $this->status = $status; return $this; }
 
-        return $this;
-    }
+    public function isPinned(): ?bool { return $this->isPinned; }
+    public function setIsPinned(bool $isPinned): static { $this->isPinned = $isPinned; return $this; }
 
-    public function getStatus(): ?TaskStatus
-    {
-        return $this->status;
-    }
+    public function getUser(): ?User { return $this->user; }
+    public function setUser(?User $user): static { $this->user = $user; return $this; }
 
-    public function setStatus(TaskStatus $status): static
-    {
-        $this->status = $status;
+    public function getPriority(): ?Priority { return $this->priority; }
+    public function setPriority(?Priority $priority): static { $this->priority = $priority; return $this; }
 
-        return $this;
-    }
-
-    public function isPinned(): ?bool
-    {
-        return $this->isPinned;
-    }
-
-    public function setIsPinned(bool $isPinned): static
-    {
-        $this->isPinned = $isPinned;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getPriority(): ?Priority
-    {
-        return $this->priority;
-    }
-
-    public function setPriority(?Priority $priority): static
-    {
-        $this->priority = $priority;
-
-        return $this;
-    }
-
-    public function getFolder(): ?Folder
-    {
-        return $this->folder ?? null;
-    }
-
-    public function setFolder(?Folder $folder): static
-    {
-        $this->folder = $folder;
-
-        return $this;
-    }
+    public function getFolder(): ?Folder { return $this->folder; }
+    public function setFolder(?Folder $folder): static { $this->folder = $folder; return $this; }
 }
