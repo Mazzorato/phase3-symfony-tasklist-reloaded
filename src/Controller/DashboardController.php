@@ -6,22 +6,31 @@ namespace App\Controller;
 use App\Entity\Folder;
 use App\Repository\FolderRepository;
 use App\Repository\TaskRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use App\Entity\User;
 
 final class DashboardController extends AbstractController
 {
-    #[Route('/dashboard', name: 'app_dashboard')]
-    public function index(TaskRepository $taskRepository, FolderRepository $folderRepository): Response
-    {
-    $tasks = $taskRepository->findBy(['user' => $this->getUser()]);
-    $folders = $folderRepository->findBy(['user' => $this->getUser()]);
+    function __construct(private LoggerInterface $logger){}
 
-    return $this->render('dashboard/index.html.twig', [
-        'tasks' => $tasks,
-        'folders' => $folders,
-    ]);
+
+    #[Route('/dashboard', name: 'app_dashboard')]
+    public function index(TaskRepository $taskRepository, FolderRepository $folderRepository, #[CurrentUser()] User $user): Response
+    {
+        $this->logger->info("HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        $tasks = $taskRepository->findBy(['user' => $this->getUser()]);
+        // $folders = $folderRepository->findBy(['user' => $this->getUser()]);
+        // $tasks_pinned = $taskRepository->findByUserOrderedByPinned($user);
+        // $this->logger->info(json_encode($tasks_pinned));
+
+        return $this->render('dashboard/index.html.twig', [
+            'tasks' => $tasks,
+            'folders' => $folders,
+        ]);
     }
     
     #[Route('/dashboard/folder/{id}', name: 'app_dashboard_folder')]
@@ -50,5 +59,17 @@ final class DashboardController extends AbstractController
         'tasks' => $tasks,
         'folders' => $folders,
     ]);
+    }
+
+    public function taskByOrderedPinned(TaskRepository $taskRepository, FolderRepository $folderRepository): Response
+    {
+        $user = $this->getUser();
+
+        $tasks = $taskRepository->findByUserOrderedByPinned($user);
+        $this->logger->info("HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        $this->logger->info(json_encode($tasks));
+    return $this->render('dashboard/index.html.twig', [
+        'tasks'   => $tasks,
+        'folders' => $folderRepository->findBy(['user' => $user]),    ]);
     }
 }

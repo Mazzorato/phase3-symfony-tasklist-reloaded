@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,4 +41,21 @@ class TaskRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findByUserOrderedByPinned(User $user): array
+    {
+        // return $this->createQueryBuilder('t')
+        //     ->andWhere('t.user = :user')
+        //     ->setParameter('user', $user)
+        //     ->orderBy('t.isPinned', 'DESC')
+        //     ->addOrderBy('t.id', 'ASC')
+        //     ->getQuery()
+        //     ->getResult();
+
+        return $this->createQueryBuilder("task")
+                ->select('task')
+                ->from("Task","task")
+                ->getQuery()
+                ->getArrayResult();
+    }
 }
