@@ -46,6 +46,25 @@
 
         <main class="flex items-center gap-4 mb-6 px-8 py-4 bg-gray-100 border border-gray-200">
             <div class="flex items-center text-sm text-black gap-1">Filtres :</div>
+            <form method="get" action="{{ path('app_dashboard') }}" class="flex items-center gap-2">
+                <label class="text-sm text-gray-900">Statut</label>
+                <select name="status" class="text-sm border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                    <option value="">Tous</option>
+                    <option value="pending" {{ currentStatus == 'pending' ? 'selected' : '' }}>En cours</option>
+                    <option value="completed" {{ currentStatus == 'completed' ? 'selected' : '' }}>Terminé</option>
+                    <option value="archived" {{ currentStatus == 'archived' ? 'selected' : '' }}>Archivée</option>
+                </select>
+                <label class="text-sm text-gray-900">Priorité</label>
+                <select name="priority" class="text-sm border border-gray-300 rounded-lg px-3 py-2 bg-white">
+                    <option value="">Toutes</option>
+                    <option value="urgent" {{ currentPriority == 'urgent' ? 'selected' : '' }}>Urgent</option>
+                    <option value="important" {{ currentPriority == 'important' ? 'selected' : '' }}>Important</option>
+                    <option value="normal" {{ currentPriority == 'normal' ? 'selected' : '' }}>Normal</option>
+                </select>
+                <button type="submit" class="px-4 py-2 text-sm bg-gray-900 text-white border border-gray-300 rounded-lg hover:bg-gray-700">
+                    Appliquer
+                </button>
+            </form>
             <div class="flex items-center gap-2">
                 <label class="text-sm text-gray-900">Statut</label>
                 <select class="text-sm border border-gray-300 rounded-lg px-3 py-2 bg-white">
