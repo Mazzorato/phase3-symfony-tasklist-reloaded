@@ -44,18 +44,18 @@ class TaskRepository extends ServiceEntityRepository
 
     public function findByUserOrderedByPinned(User $user): array
     {
-        // return $this->createQueryBuilder('t')
-        //     ->andWhere('t.user = :user')
-        //     ->setParameter('user', $user)
-        //     ->orderBy('t.isPinned', 'DESC')
-        //     ->addOrderBy('t.id', 'ASC')
-        //     ->getQuery()
-        //     ->getResult();
+        return $this->createQueryBuilder('task')
+            ->andWhere('task.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('task.isPinned', 'DESC')
+            ->addOrderBy('task.id', 'ASC')
+            ->getQuery()
+            ->getResult();
 
-        return $this->createQueryBuilder("task")
-                ->select('task')
-                ->from("Task","task")
-                ->getQuery()
-                ->getArrayResult();
+        // return $this->createQueryBuilder("task")
+        //         ->select('task')
+        //         ->from("Task","task")
+        //         ->getQuery()
+        //         ->getArrayResult();
     }
 }
