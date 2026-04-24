@@ -74,6 +74,15 @@ final class TaskController extends AbstractController
     return $this->redirectToRoute('app_dashboard');
     }
     
+    #[Route('/task/{id}/pin', name: 'app_task_pin', methods: ['POST'])]
+    public function pin (Request $request, EntityManagerInterface $em, Task $task): Response
+    {
+        if ($this->isCsrfTokenValid('task_pin' . $task->getId(), $request->request->get('_token'))) {
+            $task->setPinned(!$task->isPinned());
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('app_dashboard');
 }
     
-
+}

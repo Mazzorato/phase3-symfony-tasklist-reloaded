@@ -1,6 +1,9 @@
 <?php
 namespace App\Entity;
 
+use App\Entity\Folder;
+use App\Entity\Priority;
+use App\Entity\User;
 use App\Enums\TaskStatus;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,11 +19,11 @@ class Task
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, enumType: TaskStatus::class)]
     private ?TaskStatus $status = TaskStatus::PENDING;
 
-    #[ORM\Column]
-    private ?bool $isPinned = false;
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $isPinned = false;  // ✅ UNE SEULE déclaration
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     private ?User $user = null;
@@ -31,6 +34,7 @@ class Task
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     private ?Folder $folder = null;
 
+
     public function getId(): ?int { return $this->id; }
 
     public function getTitle(): ?string { return $this->title; }
@@ -39,8 +43,9 @@ class Task
     public function getStatus(): ?TaskStatus { return $this->status; }
     public function setStatus(TaskStatus $status): static { $this->status = $status; return $this; }
 
-    public function isPinned(): ?bool { return $this->isPinned; }
-    public function setIsPinned(bool $isPinned): static { $this->isPinned = $isPinned; return $this; }
+    // ✅ UNE SEULE méthode isPinned() et setPinned()
+    public function isPinned(): bool { return $this->isPinned; }
+    public function setPinned(bool $isPinned): static { $this->isPinned = $isPinned; return $this; }
 
     public function getUser(): ?User { return $this->user; }
     public function setUser(?User $user): static { $this->user = $user; return $this; }
